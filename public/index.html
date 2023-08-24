@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/minstyle.io@2.0.1/dist/css/minstyle.io.min.css">
+    <title>Simple PayPal Checkout Web Application</title>
+    <!-- <script src="script.js"></script> -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="product">
+            <h1>Simple PayPal Checkout</h1>
+            <img src="https://cdn.discordapp.com/attachments/1060825015681028127/1076385063903694908/rauljr7_3d_e83fed6a-69aa-4a6a-b0ec-928edd57aecf.png"
+                width="200" height="200" />
+            <h3>NFT</h3>
+            <p>Item Number: 000001</p>
+            <p>Price: $35.00</p>
+        </div>
+        <div class="form-container">
+            <h2>Buyer Information</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first-name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last-name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="address1">Address Line 1:</label>
+                    <input type="text" id="address1" name="address1" required value="199 N el camino real" />
+                </div>
+
+                <div class="form-group">
+                    <label for="address2">Address Line 2:</label>
+                    <input type="text" id="address2" name="address2" />
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required value="Encinitas" />
+                </div>
+
+                <div class="form-group">
+                    <label for="state">State or Province:</label>
+                    <input type="text" id="state" name="state" required value="California" />
+                </div>
+
+                <div class="form-group">
+                    <label for="zip">Zip or Postal Code:</label>
+                    <input type="text" id="zip" name="zip" required value="12345" />
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" required value="US" maxlength="2" />
+                </div>
+
+                <div id="paypal-button-container"></div>
+        </div>
+        <script data-sdk-integration-source="integrationbuilder_sc"></script>
+        <script
+            src="https://www.paypal.com/sdk/js?client-id=AW-wnhVDhPmSskhCd1fohcH0jtAHa_2VpO3g5nVfBxB3syzBjlCRVRQmmv3qGuLV6iKD_woQdbtCeUq4&currency=USD"></script>
+        <script>
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    const address1 = document.getElementById("address1").value;
+                    const address2 = document.getElementById("address2").value;
+                    const postal_code = document.getElementById("zip").value;
+                    const country = document.getElementById("country").value;
+                    const city = document.getElementById("city").value;
+                    const full_name = `${document.getElementById("first_name").value} ${document.getElementById("last_name").value}`;
+                    return actions.order.create({
+                        application_context: {
+                            shipping_preference: 'SET_PROVIDED_ADDRESS',
+                        },
+                        purchase_units: [
+                            {
+                                amount: {
+                                    value: '35.00'
+                                },
+                                shipping: {
+                                    name: {
+                                        full_name: full_name,
+                                    },
+                                    address: {
+                                        address_line_1: address1,
+                                        address_line_2: address2,
+                                        admin_area_2: city,
+                                        postal_code: postal_code,
+                                        country_code: country,
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture()
+                        .then(function (transaction) {
+                            alert(
+                                "Transaction successfull and " + "Thank you! " +
+                                "\n Transaction ID " + transaction.id
+                            );
+
+                        });
+                }
+            }).render('#paypal-button-container');
+
+        </script>
+    </div>
+</body>
+
+</html>

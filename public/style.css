@@ -1,0 +1,48 @@
+.input {
+  height: 40px;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  font-size: 0.98rem;
+  background-color: rgba(var(--main-bg), 1);
+  border: 2px solid rgba(var(--default-border-color), 1);
+  border-radius: var(--default-border-radius);
+  padding: 0 0.8rem;
+}
+
+.container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+}
+
+.product {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.form-container {
+    align-items: flex-start;
+}
+
+.form-group {
+    margin-bottom: 10px;
+    border-radius: 20%;
+}
+
+label {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 5px;
+    align-items: flex-start;
+}
+
+#paypal-button-container {
+    width: 100%;
+    margin-top: 40px;
+}
