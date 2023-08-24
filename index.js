@@ -70,11 +70,11 @@ const capturePayment = async (orderID) => {
 };
 
 app.get("/", (req, res) => {
-  res.sendFile(`${__dirname}/public/index.html`);
+  res.sendFile(`${__dirname}/index.html`);
 });
 
 app.get('/style.css', (req, res) => {
-  res.sendFile(`${__dirname}/public/style.css`);
+  res.sendFile(`${__dirname}/style.css`);
 });
 
 app.get('/script.js', (req, res) => {
